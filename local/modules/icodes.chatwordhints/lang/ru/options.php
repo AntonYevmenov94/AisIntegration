@@ -1,0 +1,5 @@
+<?
+$MESS['ICODES_CHATWH_TAB_MAIN'] = "Настройки";
+$MESS['ICODES_CHATWH_TAB_TITLE_MAIN'] = "Выберите инфоблок";
+$MESS["ICODES_CHATWH_OPTIONS_IBLOCK_ELEMENT_HINT"] = "Инфоблок с подсказками";
+$MESS["ICODES_CHATWH_OPTIONS_INPUT_APPLY"] = "Применить";
