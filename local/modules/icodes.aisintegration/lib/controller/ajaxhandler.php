@@ -102,15 +102,21 @@ class AjaxHandler extends Controller
             $postParams["100003"] = $deal["CLOSEDATE"];
 
             //Вызов API
-            $curl = curl_init();
-            return "gfgf";
-            $data = http_build_query($postParams);
-            curl_setopt($curl, CURLOPT_URL, "http://localhost:54332/api/products");
-            curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-            curl_exec($curl);
-            curl_close($curl);
-            return $data;
+            $client = new HttpClient();
+            $url = "http://localhost:54332/api/products";
+            $postData = http_build_query($postParams);
+            $respons = $client->query("POST", $url);
+
+            return $client->getError();
+//            $curl = curl_init();
+//            return "gfgf";
+//            $data = http_build_query($postParams);
+//            curl_setopt($curl, CURLOPT_URL, "http://localhost:54332/api/products");
+//            curl_setopt($curl, CURLOPT_POST, true);
+//            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+//            curl_exec($curl);
+//            curl_close($curl);
+//            return $data;
         }
     }
 }
