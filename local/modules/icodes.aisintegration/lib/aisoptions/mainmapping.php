@@ -171,7 +171,7 @@ class MainMapping implements OptionsInterface
                 'entering_length_of_stay',
                 Loc::getMessage("ICODES_AISINTEGR_OPTION_ENTERING_LENGTH_OF_STAY"),
                 false,
-                ["text", $arDealFields['string']],
+                ["selectbox", $arDealFields['string']],
             ),
 
 
@@ -651,7 +651,7 @@ class MainMapping implements OptionsInterface
                 'other_conditions_of_the_insurance_contract',
                 Loc::getMessage("ICODES_AISINTEGR_OPTION_OTHER_CONDITIONS_OF_THE_INSURANCE_CONTRACT"),
                 false,
-                ["text", $arDealFields['string']],
+                ["selectbox", $arDealFields['string']],
             ),
             /**
              *  Face_id
@@ -660,7 +660,16 @@ class MainMapping implements OptionsInterface
                 'face_id',
                 Loc::getMessage("ICODES_AISINTEGR_OPTION_FACE_ID"),
                 false,
-                ["text", $arDealFields['string']],
+                ["selectbox", $arDealFields['string']],
+            ),
+            /**
+             *  Face
+             */
+            array(
+                'face',
+                Loc::getMessage("ICODES_AISINTEGR_OPTION_FACE"),
+                false,
+                ["selectbox", $arDealFields['string']],
             ),
 
         );

@@ -111,23 +111,12 @@ class AjaxHandler extends Controller
             $postParams["100001"] = $deal["BEGINDATE"];
             $postParams["100002"] = $deal["BEGINDATE"];
             $postParams["100003"] = $deal["CLOSEDATE"];
-
+            return $deal;
             //Вызов API
-            $client = new HttpClient();
-            $url = "http://localhost:54332/api/products";
-            $postData = http_build_query($postParams);
-            $respons = $client->query("POST", $url);
-
-            return $client->getError();
-//            $curl = curl_init();
-//            return "gfgf";
-//            $data = http_build_query($postParams);
-//            curl_setopt($curl, CURLOPT_URL, "http://localhost:54332/api/products");
-//            curl_setopt($curl, CURLOPT_POST, true);
-//            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-//            curl_exec($curl);
-//            curl_close($curl);
-//            return $data;
+            $client = new \ICodes\AISIntegration\Helpers\Client();
+            $data = http_build_query($postParams);
+            $res = $client->request('POST', $data);
+            return $res;
         }
     }
 }
