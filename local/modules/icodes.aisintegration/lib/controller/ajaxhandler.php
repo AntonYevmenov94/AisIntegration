@@ -24,6 +24,15 @@ class AjaxHandler extends Controller
                     ),
                     new ActionFilter\Csrf(),
                 ]
+            ],
+            'insuranceApply' => [
+                'prefilters' => [
+                    new ActionFilter\Authentication(),
+                    new ActionFilter\HttpMethod(
+                        array(ActionFilter\HttpMethod::METHOD_POST)
+                    ),
+                    new ActionFilter\Csrf(),
+                ]
             ]
         ];
     }
@@ -51,6 +60,8 @@ class AjaxHandler extends Controller
      */
     public static function insuranceApplyAction($dealId)
     {
+        return $dealId;
+
         if(Loader::includeModule('crm'))
         {
             $arr = array();

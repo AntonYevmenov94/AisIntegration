@@ -1,0 +1,4 @@
+<?
+$MESS['ICODES_AISINTEGR_FRONT_TAB_TITLE'] = "Оформить полис";
+$MESS['ICODES_AISINTEGR_FRONT_TAB_LOADING'] = "Данные загружаются";
+$MESS['ICODES_AISINTEGR_FRONT_TAB_BTN'] = "Оформить";

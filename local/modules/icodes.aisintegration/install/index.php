@@ -33,8 +33,8 @@ Class icodes_aisintegration extends CModule
 	public function installEvents()
 	{
 		EventManager::getInstance()->registerEventHandlerCompatible(
-			'main',
-			'onProlog',
+			'crm',
+			'onEntityDetailsTabsInitialized',
 			$this->MODULE_ID,
 			'ICodes\AISIntegration\Helpers\FrontInterface',
 			'addTabInsurance'
@@ -45,7 +45,7 @@ Class icodes_aisintegration extends CModule
 	{
 		EventManager::getInstance()->unRegisterEventHandler(
 			'crm',
-			'OnAfterCrmContactAdd',
+			'onEntityDetailsTabsInitialized',
 			$this->MODULE_ID,
 			'ICodes\AISIntegration\Helpers\FrontInterface',
 			'addTabInsurance'
@@ -76,7 +76,7 @@ Class icodes_aisintegration extends CModule
 		$FORM_RIGHT = $APPLICATION->GetGroupRight($this->MODULE_ID);
 		if ($FORM_RIGHT=="W") {
 			$this->UnInstallEvents();
-			$this->unInstallOptions();
+			//$this->unInstallOptions();
 			ModuleManager::unRegisterModule($this->MODULE_ID);
 		}
 	}

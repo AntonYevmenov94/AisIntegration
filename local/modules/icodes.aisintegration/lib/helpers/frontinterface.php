@@ -1,63 +1,47 @@
 <?php
 namespace ICodes\AISIntegration\Helpers;
 
-use \Bitrix\Main\Config\Option;
+use Bitrix\Main\Localization\Loc;
+
+
+Loc::loadMessages(__FILE__);
 
 /**
  * Inserting in CRM interface
  */
+
 class FrontInterface
 {
-    public static function addTabInsurance()
+    public static function addTabInsurance($entityID, $entityTypeID, $guid, $tabs)
     {
-        $engine = new \CComponentEngine();
-        $page = $engine->guessComponentPath(
-            '/crm/',
-            ['detail' => '#entity_type#/details/#entity_id#/'],
-            $variables
-        );
 
-
-        // Если страница не является детальной карточкой CRM прервем выполенение
-        if ($page !== 'detail') {
-            return;
-        }
-
-        // Проверим валидность типа сущности
-        $allowTypes = ['lead', 'deal', 'contact', 'company'];
-        $variables['entity_type'] = strtolower($variables['entity_type']);
-        if (!in_array($variables['entity_type'], $allowTypes, true)) {
-            return;
-        }
-
-        // Проверим валидность идентификатора сущности
-        $variables['entity_id'] = (int) $variables['entity_id'];
-        if (0 >= $variables['entity_id']) {
-            return;
-        }
+        \Bitrix\Main\Loader::includeModule ('sale');
+        $dealEntityID = \Bitrix\Sale\Exchange\Integration\CRM\EntityType::DEAL;
 
         $assetManager = \Bitrix\Main\Page\Asset::getInstance();
-
         // Подключаем js файл
-        $assetManager->addJs('/bitrix/tools/icodes_aisintegration/js/app.js');
         $assetManager->addJs('/bitrix/tools/icodes_aisintegration/js/insurance.js');
 
-        // Подготовим параметры функции
-        $jsParams = \Bitrix\Main\Web\Json::encode(
-            $variables,
-            JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE
-        );
 
-        // Инициализируем добавление таба
-        $assetManager->addString('
-        <script>
-        BX.ready(function () {
-            if (typeof initialize_foo_crm_detail_tab === "function") {
-                initialize_foo_crm_detail_tab('.$jsParams.');
-            }
-        });
-        </script>
-    ');
+        if($entityTypeID === $dealEntityID) {
+            $tabs[] = [
+                'id' => 'tab_insurance',  // ID вкладки
+                'name' => Loc::getMessage('ICODES_AISINTEGR_FRONT_TAB_TITLE'), // Наименование вкладки
+                'html' => '<div style="color: green">'.Loc::getMessage('ICODES_AISINTEGR_FRONT_TAB_LOADING').'</div>',
+                'loader' => [
+                    'serviceUrl' => '/bitrix/tools/icodes_aisintegration/ajax/tab_content.php', // Адрес на который будет делаться запрос при первом показе вкладки
+                    // Параметры которые будут отправлены в ajax запросе, параметры передаются в массиве PARAMS
+                    'componentData' => [
+                        'id' => $entityID,
+                        'btn-text' => Loc::getMessage('ICODES_AISINTEGR_FRONT_TAB_BTN'),
+                    ],
+                ]
+            ];
+        }
+        return new \Bitrix\Main\EventResult(\Bitrix\Main\EventResult::SUCCESS, [
+            'tabs' => $tabs,
+        ]);
+
     }
 
 }
